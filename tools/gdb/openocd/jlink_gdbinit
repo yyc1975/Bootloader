@@ -1,0 +1,111 @@
+#
+# This file contains a collection of arm-none-eabi-gdb(1) macros
+# which are specific to the OpenOCD framework.
+# This file is divided into several different sections:
+#
+#   1. Required and optional OpenOCD-specific macros.
+#   2. Miscellaneous additional OpenOCD-specific macros.
+#
+# Copyright (c) 2006-2008, Innova Card.
+# Copyright (c) 2009-2011, Maxim Integrated Products.
+# Released under the General Public License (GPL).
+#
+# Created by Brian Foster <brian.foster@innova-card.com>
+# Modified by Gregory Romé <gregory.rome@maxim-ic.com>
+#
+
+####################################################
+#   1. Required and optional OpenOCD-specific macros.
+####################################################
+#
+
+#(REQUIRED)
+# Init for OpenOCD framework
+#
+# OpenOCD should have been started first
+#
+
+define probe_init
+    target remote localhost:2331 
+    monitor endian little 
+    monitor reset 
+    monitor sleep 10 
+    monitor speed 2000 
+    set remote memory-write-packet-size 16384 
+    set remote memory-write-packet-size fixed
+end
+document probe_init
+Initialize OpenOCD framework.
+Must be issued before the probe or Jibe can be accessed.
+
+The server must be started before this macro is called.
+The script .lde/debug/openocd/startopenocd should be
+used to start OpenOCD. That requires a specific probe
+configuration file.
+end
+
+#(REQUIRED)
+# Connect to the probe
+#
+define probe_connect
+	target remote localhost:3333
+end
+document probe_connect
+Connect to the probe (OpenOCD  specific)
+end
+
+#(REQUIRED)
+# Reset cpu and peripherals
+#
+define probe_reset
+	monitor reset halt
+	set $pc = 0
+end
+document probe_reset
+Resets Jibe and halts (OpenOCD  specific)
+end
+
+#(REQUIRED)
+# Set probe speed
+#
+define probe_set_speed
+	monitor jtag_khz $arg0
+end
+document probe_reset
+Set probe speed (OpenOCD specific)
+end
+
+#(REQUIRED)
+# Load binary into memory
+#
+define probe_load_bin
+	restore $arg0 binary $arg1
+end
+
+#(REQUIRED)
+# Display core status information
+#
+define probe_core_status
+	mon arm reg
+end
+
+#(OPTIONAL)
+# Set memory access size
+#
+define probe_set_access_size
+end
+document probe_set_access_size
+Set memory access size (OpenOCD specific)
+Does nothing on the OpenOCD.
+end
+
+#(REQUIRED)
+# Initialize the SDRAM
+#
+define probe_sdram_init
+	set *0xffe50100 = 5
+	set *0xffe50104 = 0x03030303
+	set *0xffe50108 = 0x03030303
+end
+document probe_sdram_init
+end

@@ -1,0 +1,81 @@
+Release notes for MQ55_FREERTOS_DEMO_3.0.0.build1:
+CHANGES:
+- Update external references.
+- Makefile updated to externalize parameters.
+- Add of files:
+ * <example name>.jflash
+ * compilation.mk
+ * ext_drv.mk
+ * framework_config.mk
+ * framework_targets.mk
+ * libraries.mk
+ * paths.mk
+ * platform.mk
+ * sources.mk
+- Debug configuration file .launch is now adapted to
+ J-Link ARM plug-in for Eclipse.
+- ca_sign_build tool now included in project.
+- Targeted Secure ROM Code references now included in project.
+
+
+------------------------
+BUG FIXED/NOT FIXED:
+- N/A
+
+
+------------------------
+VALIDATION:
+- EV Kit v3.0 + MAX32550-A3 -> OK
+ * FreeRTOS demo runs -> OK
+
+
+------------------------
+MEMORY:
+Code (.text.init) from 0x10000000 - size 0xec
+Code (.text) from 0x10000200 - size 0xb728
+Data (.rodata) from 0x1000b930 - size 0x73a84
+Data (.data) from 0x20000100 - size 0x4e4
+Data (.bss) from 0x200005e4 - size 0xef50
+Data (.stack) from 0x2003e000 - size 0x2000
+Data (.heap) from 0x2000f600 - size 0x2000
+
+
+------------------------
+NOTE:
+- Not all the sections are listed in MEMORY paragraph.
+- Compilation done for iflash LAYOUT.
+- .jflash is a project file for SEGGER's J-Flash tool.
+- Debugging in internal RAM is not supported because internal RAM is too small.
+- To debug, in internal flash, with J-Link probe, you should set in platform.mk:
+ * SYSTEM = default
+ * LAYOUT = default
+ * FRAMEWORK = NO_FWK
+- To build, in internal flash, example as bootable platform application,
+ you should set in platform.mk:
+ * SYSTEM = sla
+ * LAYOUT = framework
+ * FRAMEWORK = SLA
+
+
+------------------------
+COMPATIBILITY:
+- MAX32550-A1+
+- tools_2.4.5.build1
+- init_3.4.1.build1
+- lib_3.2.7.build1
+- link_4.1.7.build1
+- include_4.0.3.build1
+- ext_drivers/common_1.1.2.build1
+- ext_drivers/dma_2.0.0.build1
+- ext_drivers/gcr_2.0.0.build1
+- ext_drivers/gpio_2.0.1.build1
+- ext_drivers/i2c_2.0.0.build1
+- ext_drivers/intc_2.0.0.build1
+- ext_drivers/mcr_2.0.0.build1
+- ext_drivers/skbd_2.0.0.build1
+- ext_drivers/spi_2.0.0.build1
+- ext_drivers/tdc_2.0.0.build1
+- ext_drivers/tmr_2.0.0.build1
+- ext_drivers/uart_2.0.0.build1
+- ext_drivers/sci_1.2.0.build1
+- os/freertos_max32550_demo_1.0.0.build1
