@@ -1,4 +1,0 @@
-In DOS prompt
-go to Python path
-copy python.exe to \serial_sender_from_ben
-python setup.py py2exe
