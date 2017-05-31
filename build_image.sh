@@ -1,5 +1,5 @@
 #!/bin/bash
-
+ 
 CLIENT=$(whoami)
 
 IMAGE_NAME=bootloader
@@ -19,6 +19,7 @@ function build_image()
 {
     echo
     echo '[[[[[[[ Build Image ]]]]]]]'
+    echo
     echo
 
     rm -R build
